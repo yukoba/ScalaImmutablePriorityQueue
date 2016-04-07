@@ -4,7 +4,7 @@ import scala.collection.AbstractSeq
 import scalaz.Scalaz.unfold
 import scalaz.{FingerTree, Monoid, Reducer}
 
-protected class PriorityQueue[A](val tree: FingerTree[A, A]) extends AbstractSeq[A] {
+protected class PriorityQueue[A](val tree: FingerTree[A, A]) extends AbstractSeq[A] with Serializable {
   def deque: (A, PriorityQueue[A]) = (head, tail)
   def dequeOption: Option[(A, PriorityQueue[A])] = if (isEmpty) None else Some(deque)
 
