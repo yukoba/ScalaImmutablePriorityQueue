@@ -28,7 +28,7 @@ protected class PriorityQueue[A](val tree: FingerTree[A, A]) extends AbstractSeq
 
   override def iterator: Iterator[A] = toStream.iterator
   override def length: Int = tree.toStream.length
-  override def apply(idx: Int): A = toList.apply(idx)
+  override def apply(idx: Int): A = toStream(idx)
 }
 
 object PriorityQueue {
