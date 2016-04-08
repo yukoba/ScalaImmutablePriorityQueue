@@ -16,15 +16,15 @@ This wraps FingerTree of Scalaz.
     println(s"queue2 = $queue2")
     println(s"queue2.head = ${queue2.head}")
     println(s"queue2.tail = ${queue2.tail}")
-    println(s"queue2.deque = ${queue2.deque}")
-    println(s"queue2.dequeOption = ${queue2.dequeOption}")
+    println(s"queue2.dequeue = ${queue2.dequeue}")
+    println(s"queue2.dequeueOption = ${queue2.dequeueOption}")
     println(s"queue2(3) = ${queue2(3)}")
 
 ### Output
     queue2 = PriorityQueue(Test(d,4), Test(c,3), Test(b,2), Test(a,1))
     queue2.head = Test(d,4)
     queue2.tail = PriorityQueue(Test(c,3), Test(b,2), Test(a,1))
-    queue2.deque = (Test(d,4),PriorityQueue(Test(c,3), Test(b,2), Test(a,1)))
-    queue2.dequeOption = Some((Test(d,4),PriorityQueue(Test(c,3), Test(b,2), Test(a,1))))
+    queue2.dequeue = (Test(d,4),PriorityQueue(Test(c,3), Test(b,2), Test(a,1)))
+    queue2.dequeueOption = Some((Test(d,4),PriorityQueue(Test(c,3), Test(b,2), Test(a,1))))
     queue2(3) = Test(a,1)
 

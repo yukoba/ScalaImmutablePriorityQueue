@@ -21,8 +21,8 @@ class PriorityQueueTest extends FunSuite {
     assert(q5.toList == List(6, 5, 4, 3, 2, 1))
     assert(q5.toVector == Vector(6, 5, 4, 3, 2, 1))
 
-    val (v1, q6) = q5.deque
-    val (v2, _) = q6.deque
+    val (v1, q6) = q5.dequeue
+    val (v2, _) = q6.dequeue
     assert(v1 == 6)
     assert(v2 == 5)
   }
@@ -50,8 +50,8 @@ class PriorityQueueTest extends FunSuite {
     println(s"queue2 = $queue2")
     println(s"queue2.head = ${queue2.head}")
     println(s"queue2.tail = ${queue2.tail}")
-    println(s"queue2.deque = ${queue2.deque}")
-    println(s"queue2.dequeOption = ${queue2.dequeOption}")
+    println(s"queue2.dequeue = ${queue2.dequeue}")
+    println(s"queue2.dequeueOption = ${queue2.dequeueOption}")
     println(s"queue2(3) = ${queue2(3)}")
   }
 }

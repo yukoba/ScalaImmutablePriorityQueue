@@ -13,8 +13,8 @@ protected class PriorityQueue[A](val tree: FingerTree[A, A]) extends AbstractSeq
   def ++(that: GenTraversableOnce[A]): PriorityQueue[A] = enqueue(that.toIterable.seq)
   def ++:(that: TraversableOnce[A]): PriorityQueue[A] = enqueue(that.toIterable)
 
-  def deque: (A, PriorityQueue[A]) = (head, tail)
-  def dequeOption: Option[(A, PriorityQueue[A])] = if (isEmpty) None else Some(deque)
+  def dequeue: (A, PriorityQueue[A]) = (head, tail)
+  def dequeueOption: Option[(A, PriorityQueue[A])] = if (isEmpty) None else Some(dequeue)
 
   override def head: A = tree.split1(_ == tree.measure)._2
   def front: A = head
