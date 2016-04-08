@@ -52,6 +52,5 @@ object PriorityQueue {
   def empty[A](implicit ord: Ordering[A]): PriorityQueue[A] =
     new PriorityQueue(FingerTree.empty(MaxReducer[A](ord)))
 
-  def apply[A](elems: A*)(implicit ord: Ordering[A]): PriorityQueue[A] =
-    elems.foldLeft(empty[A](ord))((pq, e) => pq.enqueue(e))
+  def apply[A](elems: A*)(implicit ord: Ordering[A]): PriorityQueue[A] = empty[A](ord).enqueue(elems)
 }
