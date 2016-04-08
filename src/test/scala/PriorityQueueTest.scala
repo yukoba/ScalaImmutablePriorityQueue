@@ -6,20 +6,25 @@ class PriorityQueueTest extends FunSuite {
     val q1 = PriorityQueue.empty[Int]
     val q2 = q1.enqueue(1)
     val q3 = q2.enqueue(3)
-    val q4 = q3.enqueue(4)
-    val q5 = q4.enqueue(2)
+    val q4 = 4 +: q3
+    val q5 = (List(5) ++: (q4 :+ 2)) ++ Vector(6)
 
-    assert(q5.toString() == "PriorityQueue(4, 3, 2, 1)")
-    assert(q5.head == 4)
-    assert(q5.tail == PriorityQueue(3, 2, 1))
+    assert(q5.toString() == "PriorityQueue(6, 5, 4, 3, 2, 1)")
+    assert(q5.head == 6)
+    assert(q5.tail == PriorityQueue(5, 4, 3, 2, 1))
     assert(q5.last == 1)
-    assert(q5.tail.head == 3)
-    assert(q5.indexOf(2) == 2)
+    assert(q5.tail.head == 5)
+    assert(q5.indexOf(2) == 4)
+    assert((0 /: q5) (_ + _) == 21)
+    assert(q5.headOption == Some(6))
+    assert(q5.isTraversableAgain)
+    assert(q5.toList == List(6, 5, 4, 3, 2, 1))
+    assert(q5.toVector == Vector(6, 5, 4, 3, 2, 1))
 
     val (v1, q6) = q5.deque
     val (v2, _) = q6.deque
-    assert(v1 == 4)
-    assert(v2 == 3)
+    assert(v1 == 6)
+    assert(v2 == 5)
   }
 
   test("Object with Ordering") {
