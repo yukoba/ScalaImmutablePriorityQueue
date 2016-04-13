@@ -4,7 +4,7 @@ import scala.collection.{AbstractSeq, GenTraversableOnce}
 import scalaz.Scalaz.unfold
 import scalaz.{FingerTree, Monoid, Reducer}
 
-protected class PriorityQueue[A](val tree: FingerTree[A, A]) extends AbstractSeq[A] with Serializable {
+class PriorityQueue[A] protected(val tree: FingerTree[A, A]) extends AbstractSeq[A] with Serializable {
   def enqueue(elem: A): PriorityQueue[A] = new PriorityQueue(tree :+ elem)
   def enqueue(elem: Iterable[A]): PriorityQueue[A] = new PriorityQueue(elem.foldLeft(tree)(_ :+ _))
 

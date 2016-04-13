@@ -3,7 +3,7 @@ import org.scalatest.FunSuite
 
 class PriorityQueueTest extends FunSuite {
   test("Int") {
-    val q1 = PriorityQueue.empty[Int]
+    val q1: PriorityQueue[Int] = PriorityQueue.empty
     val q2 = q1.enqueue(1)
     val q3 = q2.enqueue(3)
     val q4 = 4 +: q3
