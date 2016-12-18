@@ -24,7 +24,7 @@ class PriorityQueue[A] protected(val tree: FingerTree[A, A]) extends AbstractSeq
     new PriorityQueue(t._1 <++> t._3)
   }
 
-  override def isEmpty = tree.isEmpty
+  override def isEmpty: Boolean = tree.isEmpty
 
   override def toStream: Stream[A] = unfold(this)(t => if (t.isEmpty) None else Some(t.head, t.tail))
 
