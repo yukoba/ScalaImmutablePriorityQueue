@@ -1,17 +1,16 @@
 package jp.yukoba.collection.immutable
 
-import scala.collection.{AbstractSeq, GenTraversableOnce}
-import scalaz.Scalaz.unfold
+import scala.collection.AbstractSeq
 import scalaz.{FingerTree, Monoid, Reducer}
 
 class PriorityQueue[A] protected(val tree: FingerTree[A, A]) extends AbstractSeq[A] with Serializable {
   def enqueue(elem: A): PriorityQueue[A] = new PriorityQueue(tree :+ elem)
-  def enqueue(elem: Iterable[A]): PriorityQueue[A] = new PriorityQueue(elem.foldLeft(tree)(_ :+ _))
+  def enqueue(elem: IterableOnce[A]): PriorityQueue[A] = new PriorityQueue(elem.iterator.foldLeft(tree)(_ :+ _))
 
   def :+(elem: A): PriorityQueue[A] = enqueue(elem)
   def +:(elem: A): PriorityQueue[A] = enqueue(elem)
-  def ++(that: GenTraversableOnce[A]): PriorityQueue[A] = enqueue(that.toIterable.seq)
-  def ++:(that: TraversableOnce[A]): PriorityQueue[A] = enqueue(that.toIterable)
+  def ++(that: IterableOnce[A]): PriorityQueue[A] = enqueue(that)
+  def ++:(that: IterableOnce[A]): PriorityQueue[A] = enqueue(that)
 
   def dequeue: (A, PriorityQueue[A]) = (head, tail)
   def dequeueOption: Option[(A, PriorityQueue[A])] = if (isEmpty) None else Some(dequeue)
@@ -26,11 +25,13 @@ class PriorityQueue[A] protected(val tree: FingerTree[A, A]) extends AbstractSeq
 
   override def isEmpty: Boolean = tree.isEmpty
 
-  override def toStream: Stream[A] = unfold(this)(t => if (t.isEmpty) None else Some(t.head, t.tail))
+  def toLazyList: LazyList[A] = LazyList.unfold(this)(t => if (t.isEmpty) None else Some(t.head, t.tail))
 
-  override def iterator: Iterator[A] = toStream.iterator
+  override def iterator: Iterator[A] = toLazyList.iterator
   override def length: Int = tree.toStream.length
-  override def apply(idx: Int): A = toStream(idx)
+  override def apply(idx: Int): A = toLazyList(idx)
+
+  override protected def className: String = "PriorityQueue"
 }
 
 object PriorityQueue {
