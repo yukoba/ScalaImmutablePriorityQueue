@@ -1,7 +1,7 @@
 import jp.yukoba.collection.immutable.PriorityQueue
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
-class PriorityQueueTest extends FunSuite {
+class PriorityQueueTest extends AnyFunSuite {
   test("Int") {
     val q1: PriorityQueue[Int] = PriorityQueue.empty
     val q2 = q1.enqueue(1)
