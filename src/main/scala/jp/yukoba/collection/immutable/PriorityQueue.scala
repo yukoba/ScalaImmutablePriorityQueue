@@ -1,7 +1,9 @@
 package jp.yukoba.collection.immutable
 
-import scala.collection.AbstractSeq
+import scalaz.Maybe.Just
 import scalaz.{FingerTree, Monoid, Reducer}
+
+import scala.collection.AbstractSeq
 
 class PriorityQueue[A] protected(val tree: FingerTree[A, A]) extends AbstractSeq[A] with Serializable {
   def enqueue(elem: A): PriorityQueue[A] = new PriorityQueue(tree :+ elem)
@@ -15,11 +17,11 @@ class PriorityQueue[A] protected(val tree: FingerTree[A, A]) extends AbstractSeq
   def dequeue: (A, PriorityQueue[A]) = (head, tail)
   def dequeueOption: Option[(A, PriorityQueue[A])] = if (isEmpty) None else Some(dequeue)
 
-  override def head: A = tree.split1(_ == tree.measure.toOption.get)._2
+  override def head: A = tree.split1(n => tree.measure == Just(n))._2
   def front: A = head
 
   override def tail: PriorityQueue[A] = {
-    val t = tree.split1(_ == tree.measure.toOption.get)
+    val t = tree.split1(n => tree.measure == Just(n))
     new PriorityQueue(t._1 <++> t._3)
   }
 
