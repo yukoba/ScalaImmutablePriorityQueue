@@ -1,5 +1,5 @@
 name := "ImmutablePriorityQueue"
-version := "0.1.5"
+version := "0.1.6"
 scalaVersion := "2.13.4"
 
 libraryDependencies ++= Seq(
