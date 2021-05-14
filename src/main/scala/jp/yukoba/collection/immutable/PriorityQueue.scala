@@ -1,7 +1,7 @@
 package jp.yukoba.collection.immutable
 
 import scalaz.Maybe.Just
-import scalaz.{FingerTree, Monoid, Reducer}
+import scalaz.{FingerTree, Reducer, Semigroup}
 
 import scala.collection.AbstractSeq
 
@@ -30,27 +30,17 @@ class PriorityQueue[A] protected(val tree: FingerTree[A, A]) extends AbstractSeq
   def toLazyList: LazyList[A] = LazyList.unfold(this)(t => if (t.isEmpty) None else Some(t.head, t.tail))
 
   override def iterator: Iterator[A] = toLazyList.iterator
-  override def length: Int = tree.toStream.length
+  override def length: Int = tree.iterator.length
   override def apply(idx: Int): A = toLazyList(idx)
 
   override protected def className: String = "PriorityQueue"
 }
 
 object PriorityQueue {
-  /** null is the smallest */
-  private class MaxMonoid[A](ord: Ordering[A]) extends Monoid[A] {
-    override def zero: A = null.asInstanceOf[A]
-
-    override def append(f1: A, f2: => A): A = {
-      if (f1 == null) f2
-      else if (f2 == null) f1
-      else if (ord.lt(f1, f2)) f2
-      else f1
-    }
-  }
-
   private def MaxReducer[A](ord: Ordering[A]): Reducer[A, A] =
-    Reducer.identityReducer[A](new MaxMonoid(ord))
+    Reducer.identityReducer[A](new Semigroup[A] {
+      override def append(f1: A, f2: => A): A = ord.max(f1, f2)
+    })
 
   def empty[A](implicit ord: Ordering[A]): PriorityQueue[A] =
     new PriorityQueue(FingerTree.empty(MaxReducer[A](ord)))

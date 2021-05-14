@@ -22,6 +22,7 @@ class PriorityQueueTest extends AnyFunSuite {
     assert(q5.isTraversableAgain)
     assert(q5.toList == List(6, 5, 4, 3, 2, 1))
     assert(q5.toVector == Vector(6, 5, 4, 3, 2, 1))
+    assert(q5.size == 6)
 
     val (v1, q6) = q5.dequeue
     val (v2, _) = q6.dequeue
