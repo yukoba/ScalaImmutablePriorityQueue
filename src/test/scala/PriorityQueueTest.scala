@@ -38,7 +38,7 @@ class PriorityQueueTest extends AnyFunSuite {
       override def compare(x: Test, y: Test): Int = y.priority compare x.priority
     }
 
-    val queue = PriorityQueue(Test("b", 2), Test("a", 1), Test("c", 3))(TestMinOrdering)
+    val queue = PriorityQueue(Test("b", 2), Test("a", 1), Test("c", 3))(using TestMinOrdering)
     println(s"queue = $queue")
   }
 

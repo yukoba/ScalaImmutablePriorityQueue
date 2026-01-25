@@ -1,8 +1,11 @@
-name := "ImmutablePriorityQueue"
-version := "0.1.10"
-scalaVersion := "3.0.0" // "2.13.5"
+ThisBuild / version := "0.1.11"
+ThisBuild / scalaVersion := "3.3.7"
 
-libraryDependencies ++= Seq(
-  "org.scalaz" %% "scalaz-core" % "7.4.0-M7", // "7.3.3"
-  "org.scalatest" %% "scalatest" % "3.2.9" % Test
-)
+lazy val root = (project in file("."))
+  .settings(
+    name := "ImmutablePriorityQueue",
+    libraryDependencies ++= Seq(
+      "org.scalaz" %% "scalaz-core" % "7.3.8",
+      "org.scalatest" %% "scalatest" % "3.2.19" % Test
+    ),
+  )

@@ -38,12 +38,12 @@ class PriorityQueue[A] protected(val tree: FingerTree[A, A]) extends AbstractSeq
 
 object PriorityQueue {
   private def MaxReducer[A](ord: Ordering[A]): Reducer[A, A] =
-    Reducer.identityReducer[A](new Semigroup[A] {
+    Reducer.identityReducer[A](using new Semigroup[A] {
       override def append(f1: A, f2: => A): A = ord.max(f1, f2)
     })
 
   def empty[A](implicit ord: Ordering[A]): PriorityQueue[A] =
-    new PriorityQueue(FingerTree.empty(MaxReducer[A](ord)))
+    new PriorityQueue(FingerTree.empty(using MaxReducer[A](ord)))
 
-  def apply[A](elems: A*)(implicit ord: Ordering[A]): PriorityQueue[A] = empty[A](ord).enqueue(elems)
+  def apply[A](elems: A*)(implicit ord: Ordering[A]): PriorityQueue[A] = empty[A](using ord).enqueue(elems)
 }
