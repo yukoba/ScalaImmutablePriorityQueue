@@ -26,11 +26,9 @@ class PriorityQueue[A] protected (val tree: FingerTree[A, A]) extends AbstractSe
 
     override def isEmpty: Boolean = tree.isEmpty
 
-    def toLazyList: LazyList[A] = LazyList.unfold(this)(t => if t.isEmpty then None else Some(t.head, t.tail))
-
-    override def iterator: Iterator[A] = toLazyList.iterator
+    override def iterator: Iterator[A] = Iterator.unfold(this)(t => if t.isEmpty then None else Some(t.head, t.tail))
     override def length: Int = tree.iterator.length
-    override def apply(idx: Int): A = toLazyList(idx)
+    override def apply(idx: Int): A = iterator.drop(idx).next()
 
     override protected def className: String = "PriorityQueue"
 
